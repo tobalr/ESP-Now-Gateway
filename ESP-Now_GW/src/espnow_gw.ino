@@ -162,7 +162,7 @@ void reconnect() {
     while (!client.connected()) {
         Serial.print("Attempting MQTT connection...");
         // Attempt to connect
-        if (client.connect("arduinoClient")) {
+        if (client.connect("espNowGw","test","123456")) {
             Serial.println("connected");
             // Once connected, publish an announcement...
             client.publish("outTopic", "Hello world!");
