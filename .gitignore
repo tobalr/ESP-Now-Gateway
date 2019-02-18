@@ -20,3 +20,5 @@
 .history
 
 # End of https://www.gitignore.io/api/platformio,visualstudiocode
+# Added by tobalr
+.swp #vim 
