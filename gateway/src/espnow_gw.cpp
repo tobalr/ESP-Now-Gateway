@@ -33,9 +33,11 @@
  */
 
 #include <SPI.h>
-#include <Ethernet.h>           // Required for ETHERNET. Wiznet code in lib dir.
+#include <Ethernet.h>
 #include <PubSubClient.h>
 #include <ESP8266WiFi.h>        // Required for WIFI. Normal, built-in library.
+#include <Arduino.h>
+
 /* *INDENT-OFF* */
 extern "C" {
     #include <espnow.h>

@@ -1,6 +1,6 @@
 {
     "terminal.integrated.env.linux": {
-        "PATH": "/home/tobalr/.platformio/penv/bin:/home/tobalr/.platformio/penv:/home/tobalr/bin:/home/tobalr/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/tobalr/Android/Sdk/platform-tools:/home/tobalr/Android/Sdk/tools:/home/tobalr/Android/Sdk/ndk-bundle",
+        "PATH": "/home/tobalr/.platformio/penv/bin:/home/tobalr/.platformio/penv:/home/tobalr/.local/bin:/home/tobalr/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/lib/jvm/java-8-oracle/bin:/usr/lib/jvm/java-8-oracle/db/bin:/usr/lib/jvm/java-8-oracle/jre/bin:/home/tobalr/Android/Sdk/platform-tools:/home/tobalr/Android/Sdk/tools:/home/tobalr/Android/Sdk/ndk-bundle",
         "PLATFORMIO_CALLER": "vscode"
     }
 }
