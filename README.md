@@ -1,3 +1,11 @@
+#Notes by Tobalr
+## Running mosquitto
+`mosquitto_sub -h 192.168.1.34 -t ESPNow/#  -u test -P 123456  -v`
+`mosquitto_sub -h 192.168.1.34 -t outTopic/#  -u test -P 123456  -v`
+
+
+
+
 # ESP-Now-Gateway
 ESP8266 with W5500 ethernet running as a gateway for ESP-Now nodes.  Node demo code included.
 
