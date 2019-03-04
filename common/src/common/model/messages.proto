@@ -1,13 +1,8 @@
 syntax = "proto2";
-package tobalr;
 option java_package = "dk.tobalr.espsensornodes";
  
 message Report {
-    required string deviceName = 1;
-    repeated Reading reading = 2;
-}
-
-message Reading {
-    required string name = 3;
-    required float value = 4;
+    required int32 nodeId = 1;
+    optional int32 sensorType = 2;
+    optional float value = 3;
 }

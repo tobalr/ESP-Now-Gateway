@@ -10,6 +10,13 @@
 
 #define WIFI_DEFAULT_CHANNEL 11
 
+#define SENSOR_TYPE_TEMPERATURE 10
+
+
+#include <messages.pb.h>
+#include <pb_encode.h>
+#include <pb_decode.h>
+
 /*
  * Define the MAC address for our -Gateway- WiFi interface.
  * 
@@ -37,12 +44,12 @@ uint8_t cont06_mac[] = { 0x02, 0xFE, 0xED, 0xBE, 0xEF, 0x08 };	// Change me!
 /*
  * The gateway and nodes must share an identical data structure.
  */
-struct __attribute__ ((packed)) SENSOR_DATA {
-    uint8_t	loc_id;
-    float	temp;
-    float	humidity;
-    float	pressure;
-} sensorData;
+// struct __attribute__ ((packed)) SENSOR_DATA {
+//     uint8_t	loc_id;
+//     float	temp;
+//     float	humidity;
+//     float	pressure;
+// } sensorData;
 
 
 #endif

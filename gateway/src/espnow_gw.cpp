@@ -45,6 +45,9 @@ extern "C" {
     #include "espnow_common.h"
     #include "espnow_gw.h"
 }
+
+    uint8_t buffer[128];
+    Report report;
 /* *INDENT-ON* */ 
 
 
@@ -89,7 +92,15 @@ void initEspNow() {
 /* *INDENT-OFF* */
     esp_now_register_recv_cb([](uint8_t * r_mac, uint8_t * r_data, uint8_t len) {
                  memcpy(&rec_MAC, r_mac, sizeof(rec_MAC));	// Save MAC passed in cb.
-                 memcpy(&sensorData, r_data, sizeof(sensorData));	// Save data struct passed in cb.
+                 //memcpy(&sensorData, r_data, sizeof(sensorData));	// Save data struct passed in cb.
+                 report = Report_init_zero;
+                 Serial.write(r_data, len);
+                 pb_istream_t inStream = pb_istream_from_buffer(r_data, len);
+                 if (!pb_decode(&inStream, Report_fields, &report)){
+                    Serial.println("failed to decode proto");
+                    Serial.println(PB_GET_ERROR(&inStream));
+                    return;
+                 }
                  haveReading = true;}
     );
 /* *INDENT-ON* */
@@ -164,7 +175,7 @@ void reconnect() {
     while (!client.connected()) {
         Serial.print("Attempting MQTT connection...");
         // Attempt to connect
-        if (client.connect("espNowGw","test","123456")) {
+        if (client.connect("espNowGw","tobalr","2Ih8DXlkCkvYZSBhwWt5")) {
             Serial.println("connected");
             // Once connected, publish an announcement...
             client.publish("outTopic", "Hello world!");
@@ -213,6 +224,8 @@ void setup() {
 
     Serial.print("Ethernet IP is: ");
     Serial.println(Ethernet.localIP());
+
+
     }
 
 
@@ -223,10 +236,16 @@ void loop() {
         haveReading = false;
         Serial.print("Connection from: ");
         printMacAddress(rec_MAC);
-        Serial.printf("  Id: %i, Temp=%0.1f, Hum=%0.0f%%, pressure=%0.0fmb\r\n",
-                      sensorData.loc_id, sensorData.temp, sensorData.humidity,
-                      sensorData.pressure);
-        snprintf(buff, MQ_TOPIC_MAX, "%i:%0.2f:%0.0f:%0.0f", sensorData.loc_id, sensorData.temp, sensorData.humidity, sensorData.pressure);
+        Serial.println(report.nodeId);
+        Serial.println(report.sensorType);
+        Serial.println(report.value);
+              
+        
+        
+        // Serial.printf("  Id: %i, Temp=%0.1f, Hum=%0.0f%%, pressure=%0.0fmb\r\n",
+        //               sensorData.loc_id, sensorData.temp, sensorData.humidity,
+        //               sensorData.pressure);
+        // snprintf(buff, MQ_TOPIC_MAX, "%i:%0.2f:%0.0f:%0.0f", sensorData.loc_id, sensorData.temp, sensorData.humidity, sensorData.pressure);
         mq_publish((char *)TOPIC01, buff);
     }
     if (!client.connected()) {

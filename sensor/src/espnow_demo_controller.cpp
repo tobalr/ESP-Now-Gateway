@@ -15,7 +15,7 @@ extern "C" {
     #include <espnow_common.h>
 }
 
-#define	MY_LOC_ID	27
+#define	MY_NODE_ID   101
 uint8_t mac[] = { 0x02, 0x60, 0x0D, 0xF0, 0x0D, 0x02 };
 
 void printMacAddress(uint8_t * macaddr) {
@@ -52,9 +52,7 @@ void setup() {
     }
 
     esp_now_set_self_role(ESP_NOW_ROLE_CONTROLLER);
-    esp_now_register_recv_cb([]
-                             (uint8_t * macaddr, uint8_t * data,
-                              uint8_t len) {
+    esp_now_register_recv_cb([](uint8_t * macaddr, uint8_t * data,uint8_t len) {
                              Serial.println("recv_cb");
                              Serial.print("mac address: ");
                              printMacAddress(macaddr);
@@ -70,18 +68,24 @@ void setup() {
                              Serial.println(status);
                              });
 
-    int res = esp_now_add_peer(wifi_mac, (uint8_t) ESP_NOW_ROLE_SLAVE,
-                               (uint8_t) WIFI_DEFAULT_CHANNEL, NULL, 0);
+    int res = esp_now_add_peer(wifi_mac, (uint8_t) ESP_NOW_ROLE_SLAVE,(uint8_t) WIFI_DEFAULT_CHANNEL, NULL, 0);
 
+    Report report = Report_init_zero;
+    report.nodeId = 123;
+    report.sensorType = 45;
+    report.value = 67;
 
-    sensorData.loc_id = MY_LOC_ID;
-    sensorData.temp = ((uint8_t) RANDOM_REG32);
-    sensorData.humidity = ((uint8_t) RANDOM_REG32);
-    sensorData.pressure = ((uint8_t) RANDOM_REG32);
+    uint8_t buffer[128];
+    pb_ostream_t outStream = pb_ostream_from_buffer(buffer, sizeof(buffer));
 
-    uint8_t bs[sizeof(sensorData)];
-    memcpy(bs, &sensorData, sizeof(sensorData));
-    esp_now_send(wifi_mac, bs, sizeof(sensorData));
+    if (!pb_encode(&outStream, Report_fields, &report))
+    {
+        Serial.println("failed to encode proto");
+        Serial.println(PB_GET_ERROR(&outStream));
+        return;
+    }
+    
+    esp_now_send(wifi_mac, buffer, outStream.bytes_written);
 
     ESP.deepSleep(20e6, WAKE_RF_DEFAULT);
 }

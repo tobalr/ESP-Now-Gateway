@@ -1,12 +1,10 @@
 
-¾
-messages.prototobalr"S
-Report
+„
+messages.proto"V
+Report
+nodeId (RnodeId
 
-deviceName (	R
-deviceName)
-reading (2.tobalr.ReadingRreading"3
-Reading
-name (	Rname
-value (RvalueB
+sensorType (R
+sensorType
+value (RvalueB
 dk.tobalr.espsensornodes

@@ -32,7 +32,7 @@ IPAddress eth_IP(192, 168, 1, 68);    // CHANGE THIS to something relevant for Y
 IPAddress eth_MASK(255, 255, 255, 0);   // Subnet mask.
 IPAddress eth_DNS(192, 168, 1, 33);   // DNS server.
 IPAddress eth_GW(192, 168, 1, 1);   // Gateway (router).
-IPAddress mq_server(192, 168, 1, 34);   // CHANGE THIS to point at YOUR MQTT broker.
+IPAddress mq_server(192, 168, 1, 49 );   // CHANGE THIS to point at YOUR MQTT broker.
 
 EthernetClient ethClient;       // ETHERNET - The gateway wire to the local network.
 PubSubClient client(ethClient); // ETHERNET - The MQTT process is attached to the wire, -not- WiFi.
